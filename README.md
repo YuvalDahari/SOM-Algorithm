@@ -22,11 +22,11 @@ In each iteration of the algorithm, we find the BMU for each data vector and upd
 
 The Euclidean distance is used to determine the BMU:
 
-\[ BMU = \arg\min_j \| \mathbf{x} - \mathbf{w}_j \| \]
+$ BMU = \arg\min_j \| \mathbf{x} - \mathbf{w}_j \| $
 
 where:
-- \( \mathbf{x} \) is the input vector,
-- \( \mathbf{w}_j \) is the weight vector of neuron \( j \).
+- $ \mathbf{x} $ is the input vector,
+- $ \mathbf{w}_j $ is the weight vector of neuron $ j $.
 
 ## Neighbor Update
 
@@ -34,31 +34,31 @@ When updating a neuron, we also update its neighbors to ensure that similar neur
 
 The update rule for the weight vector of the BMU and its neighbors is:
 
-\[ \mathbf{w}_j(t+1) = \mathbf{w}_j(t) + \eta(t) \cdot h_{j,i}(t) \cdot (\mathbf{x}(t) - \mathbf{w}_j(t)) \]
+$ \mathbf{w}_j(t+1) = \mathbf{w}_j(t) + \eta(t) \cdot h_{j,i}(t) \cdot (\mathbf{x}(t) - \mathbf{w}_j(t)) $
 
 where:
-- \( \mathbf{w}_j(t) \) is the weight vector of neuron \( j \) at time \( t \),
-- \( \eta(t) \) is the learning rate at time \( t \),
-- \( h_{j,i}(t) \) is the neighborhood function centered around the BMU \( i \).
+- $ \mathbf{w}_j(t) $ is the weight vector of neuron $ j $ at time $ t $,
+- $ \eta(t) $ is the learning rate at time $ t $,
+- $ h_{j,i}(t) $ is the neighborhood function centered around the BMU $ i $.
 
 The neighborhood function is often chosen as a Gaussian:
 
-\[ h_{j,i}(t) = \exp\left(-\frac{\| \mathbf{r}_j - \mathbf{r}_i \|^2}{2\sigma^2(t)}\right) \]
+$ h_{j,i}(t) = \exp\left(-\frac{\| \mathbf{r}_j - \mathbf{r}_i \|^2}{2\sigma^2(t)}\right) $
 
 where:
-- \( \mathbf{r}_j \) and \( \mathbf{r}_i \) are the position vectors of neurons \( j \) and \( i \) in the grid,
-- \( \sigma(t) \) is the neighborhood radius at time \( t \).
+- $ \mathbf{r}_j $ and $ \mathbf{r}_i $ are the position vectors of neurons $ j $ and $ i $ in the grid,
+- $ \sigma(t) $ is the neighborhood radius at time $ t $.
 
 ## Learning Rate
 
 The learning rate is a crucial value that influences the learning level at each stage of network building. It changes from iteration to iteration and differs between updating the BMU and its neighbors. Initially set at 0.3, the learning rate is reduced over iterations to retain learned information and prevent excessive changes.
 
-\[ \eta(t) = \eta_0 \cdot \left(1 - \frac{t}{T}\right) \]
+$ \eta(t) = \eta_0 \cdot \left(1 - \frac{t}{T}\right) $
 
 where:
-- \( \eta(t) \) is the learning rate at iteration \( t \),
-- \( \eta_0 \) is the initial learning rate,
-- \( T \) is the total number of iterations.
+- $ \eta(t) $ is the learning rate at iteration \( t \),
+- $ \eta_0 $ is the initial learning rate,
+- $ T $ is the total number of iterations.
 
 ## Solution Quality
 
@@ -67,9 +67,9 @@ To assess the quality of the solution, we can measure how well the network class
 ## Hyperparameters
 
 The following hyperparameters are used in the SOM model:
-- Initial learning rate (\( \eta_0 \)): 0.3
-- Total number of iterations (\( T \)): 1000
-- Neighborhood radius (\( \sigma(t) \)): decreasing over time
+- Initial learning rate ($ \eta_0 $): 0.3
+- Total number of iterations ($ T $): 5
+- Neighborhood radius ($ \sigma(t) $): decreasing over time
 - Number of neurons: 100 (10x10 grid)
 
 These hyperparameters can be adjusted to optimize the performance of the SOM algorithm for different datasets.
@@ -80,21 +80,12 @@ These hyperparameters can be adjusted to optimize the performance of the SOM alg
 
 - Python 3.x
 - NumPy
-- Matplotlib (optional, for visualizing the results)
 
-### Installation
-
+### Running 
 1. Clone the repository:
    ```bash
    git clone https://github.com/YuvalDahari/SOM-Algorithm.git
    ```
-2. Install the required Python packages:
-      ```bash
-    pip install numpy matplotlib
-   ```
-### Usage
-
-1. Prepare your dataset and ensure it is in the appropriate format (e.g., a CSV file with numerical vectors).
 2. Run the SOM algorithm:
       ```bash
     python main.py
