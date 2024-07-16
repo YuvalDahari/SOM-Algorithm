@@ -72,41 +72,42 @@ def update():
 The neuron network in the SOM model considers the location of neurons, aiming for similar neurons to be close. When updating a neuron, its neighbors are also updated with decreasing intensity to avoid disrupting the network. The update process is as follows:
 
 \begin{lstlisting}[language=Python, caption=Function to update the neighbors of the BMU]
-def neighbors_update(vector, idx):
-    global NEURONS_MATRIX
 
-    first_learning_rate = LEARNING_RATE / (ITERATIONS + 1)
-    second_learning_rate = first_learning_rate / (ITERATIONS + 1)
-    i, j = idx
-
-    first_layer = []
-    second_layer = []
-    first_layer_directions = []
-    second_layer_directions = []
-
-    if j % 2 == 1:
-        first_layer_directions = [(0, -1), (0, 1), (1, -1), (1, 0), (1, 1), (-1, 0)]
-        second_layer_directions = [(-2, 0),(-1, 1), (-1, 2), (0, 2), (1, 2), (2, 1), (2, 0), (-1, -1), (-1, -2), (0, -2), (1, -2), (2, -1)]
-
-    if j % 2 == 0:
-        first_layer_directions = [(-1, -1), (-1, 0), (-1, 1), (0, 1), (0, -1), (1, 0)]
-        second_layer_directions = [(-2, -1), (-2, 0), (-2, 1), (-1, 2), (0, 2), (1, 2), (-1, -2 ), (0, -2), (1, -2), (1, -1), (1, 1), (2, 0)]
-
-    for di, dj in first_layer_directions:
-        ni, nj = i + di, j + dj
-        if 0 <= ni < 10 and 0 <= nj < 10:
-            first_layer.append((ni, nj))
-
-    for di, dj in second_layer_directions:
-        ni, nj = i + di, j + dj
-        if 0 <= ni < 10 and 0 <= nj < 10:
-            second_layer.append((ni, nj))
-
-    for ni, nj in first_layer:
-        NEURONS_MATRIX[ni][nj] = calc_update(vector, NEURONS_MATRIX[ni][nj], first_learning_rate)
-
-    for ni, nj in second_layer:
-        NEURONS_MATRIX[ni][nj] = calc_update(vector, NEURONS_MATRIX[ni][nj], second_learning_rate)
+    def neighbors_update(vector, idx):
+        global NEURONS_MATRIX
+    
+        first_learning_rate = LEARNING_RATE / (ITERATIONS + 1)
+        second_learning_rate = first_learning_rate / (ITERATIONS + 1)
+        i, j = idx
+    
+        first_layer = []
+        second_layer = []
+        first_layer_directions = []
+        second_layer_directions = []
+    
+        if j % 2 == 1:
+            first_layer_directions = [(0, -1), (0, 1), (1, -1), (1, 0), (1, 1), (-1, 0)]
+            second_layer_directions = [(-2, 0),(-1, 1), (-1, 2), (0, 2), (1, 2), (2, 1), (2, 0), (-1, -1), (-1, -2), (0, -2), (1, -2), (2, -1)]
+    
+        if j % 2 == 0:
+            first_layer_directions = [(-1, -1), (-1, 0), (-1, 1), (0, 1), (0, -1), (1, 0)]
+            second_layer_directions = [(-2, -1), (-2, 0), (-2, 1), (-1, 2), (0, 2), (1, 2), (-1, -2 ), (0, -2), (1, -2), (1, -1), (1, 1), (2, 0)]
+    
+        for di, dj in first_layer_directions:
+            ni, nj = i + di, j + dj
+            if 0 <= ni < 10 and 0 <= nj < 10:
+                first_layer.append((ni, nj))
+    
+        for di, dj in second_layer_directions:
+            ni, nj = i + di, j + dj
+            if 0 <= ni < 10 and 0 <= nj < 10:
+                second_layer.append((ni, nj))
+    
+        for ni, nj in first_layer:
+            NEURONS_MATRIX[ni][nj] = calc_update(vector, NEURONS_MATRIX[ni][nj], first_learning_rate)
+    
+        for ni, nj in second_layer:
+            NEURONS_MATRIX[ni][nj] = calc_update(vector, NEURONS_MATRIX[ni][nj], second_learning_rate)
 \end{lstlisting}
 
 \section{Learning Rate}
@@ -119,32 +120,32 @@ N_i^{(t+1)} = N_i^t + \lambda (u_j - N_i^t)
 Where $\lambda$ is the learning rate. The learning rate for neighbors is adjusted by dividing by the number of iterations plus one for the first layer and by the number of iterations plus one squared for the second layer.
 
 \begin{lstlisting}[language=Python, caption=Function to calculate the update for a neuron based on a vector and learning rate]
-def calc_update(vector, neurons, learning_rate):
-    return neurons + learning_rate * (vector - neurons)
+    def calc_update(vector, neurons, learning_rate):
+        return neurons + learning_rate * (vector - neurons)
 \end{lstlisting}
 
 \section{The Nature of the Solution}
 The solution is evaluated based on topological proximity in the network and error distance. The score calculation is as follows:
 
 \begin{lstlisting}[language=Python, caption=Function to calculate a score]
-def calc_score(board):
-    total_score = 0
-    num_sample = 0
-    max_euclidean_distance_value = np.sqrt(VECTOR_LENGTH * (255 ** 2))
-    max_topological_distance_value = 13
-
-    for vector in DS:
-        num_sample = num_sample + 1
-        i, j = extract_bmu_idx(vector)
-        error_euclidean_distance = 100 * (euclidean_distance(vector, NEURONS_MATRIX[i][j]) / max_euclidean_distance_value)
-
-        first_closest_neuron_idx, second_closest_neuron_idx = find_two_best_neurons(vector)
-        topological_distance = board.topological_distance(first_closest_neuron_idx, second_closest_neuron_idx) - 1
-        error_topological_distance = 100 * (topological_distance / max_topological_distance_value)
-
-        total_score = total_score + (100 - (0.5 * error_euclidean_distance + 0.5 * error_topological_distance))
-
-    return total_score / num_sample
+    def calc_score(board):
+        total_score = 0
+        num_sample = 0
+        max_euclidean_distance_value = np.sqrt(VECTOR_LENGTH * (255 ** 2))
+        max_topological_distance_value = 13
+    
+        for vector in DS:
+            num_sample = num_sample + 1
+            i, j = extract_bmu_idx(vector)
+            error_euclidean_distance = 100 * (euclidean_distance(vector, NEURONS_MATRIX[i][j]) / max_euclidean_distance_value)
+    
+            first_closest_neuron_idx, second_closest_neuron_idx = find_two_best_neurons(vector)
+            topological_distance = board.topological_distance(first_closest_neuron_idx, second_closest_neuron_idx) - 1
+            error_topological_distance = 100 * (topological_distance / max_topological_distance_value)
+    
+            total_score = total_score + (100 - (0.5 * error_euclidean_distance + 0.5 * error_topological_distance))
+    
+        return total_score / num_sample
 \end{lstlisting}
 
 The score formula is given by:
@@ -164,9 +165,9 @@ The algorithm was run for 10,000 iterations, and the change in the learning rate
 
 \section{Running Instructions}
 To run the model, follow these steps:
-1. Clone the repository: \url{https://github.com/YuvalDahari/Genetic_Algorythm_Matching}
+1. Clone the repository: \url{https://github.com/YuvalDahari/SOM-Algorithm}
 2. Navigate to the project directory.
 3. Ensure all dependencies are installed.
-4. Run the main script to start the SOM algorithm.
+5. Run the main script to start the SOM algorithm.
 
 \end{document}
