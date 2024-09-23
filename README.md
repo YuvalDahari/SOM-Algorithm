@@ -35,7 +35,7 @@ The number of neurons in the network is 100, which is logical given there are 10
 ## The BMU Vector
 In each iteration of the algorithm, we go through all data members, find a BMU for each member, and approximate the BMU to that member. The BMU (Best Matching Unit) is the neuron vector from the network that is "closest" to the data vector sampled each time. Proximity is defined using Euclidean distance:
 
-$$text{BMU} = argmax_i \left[ \sqrt{\sum_{j=0}^{10000} (N_i - u_j)^2} \right]$$
+$${BMU} = argmax_i \left[ \sqrt{\sum_{j=0}^{10000} (N_i - u_j)^2} \right]$$
 
 The update process involves looping over all vectors in the data set, extracting the BMU indices, updating the neuron value (BMU) in the network, and updating the neighbors of the BMU.
 
@@ -94,7 +94,7 @@ def neighbors_update(vector, idx):
 ## Learning Rate
 The learning rate affects the level of learning at each stage of building the network. It is updated during the run from iteration to iteration and varies between the BMU and its neighbors. The initial learning rate is set to 0.3, and it decreases over time. The update process is given by:
 
-\[ N_i^{(t+1)} = N_i^t + \lambda (u_j - N_i^t) \]
+$$N_i^{t+1} = N_i^t + \lambda \cdot (u_j - N_i^t)$$
 
 Where \(\lambda\) is the learning rate. The learning rate for neighbors is adjusted by dividing by the number of iterations plus one for the first layer and by the number of iterations plus one squared for the second layer.
 
