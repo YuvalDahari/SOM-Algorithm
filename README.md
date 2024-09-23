@@ -25,7 +25,7 @@ When implementing a SOM network, the neurons must be kept in a data structure, w
 ### Initializing the Neurons
 We chose to initialize each neuron by iterating over the data, taking a sample for each neuron, summing them up element-wise, and calculating an average. We created 100 average vectors, defined as the neurons of the network. For \(N_i\) the \(i\)-th neuron and \(u_j\) the \(j\)-th vector in the data set:
 
-$$\forall1\leq i\leq100,\forall1\leq j\leq 10000,j%100=i:N_i=\frac{\sum_j u_j}{100}$$
+$$\forall1\leq i\leq100,\forall1\leq j\leq 10000:N_i=\frac{\sum_j u_j}{100}$$
 
 The reason for this initialization is to capture common characteristics in the data, such as a black frame present in all images.
 
