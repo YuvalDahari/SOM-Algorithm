@@ -134,9 +134,7 @@ The score formula is given by:
 \text{SCORE} = \frac{\sum_{j=1}^{10000} \left[ 100 - \left( \frac{100 \cdot TD(N_1^j, N_2^j)}{\max TD(N_k, N_l)} \cdot 0.5 + \frac{100 \cdot ED(N_1^j, u_j)}{\max ED(u_k, u_l)} \cdot 0.5 \right) \right]}{10000}
 \]
 
-\[
-\text{SCORE} = \frac{\sum_{j=1}^10000}{10000}
-\]
+$$\text{SCORE} = \frac{\sum_{j=1}^10000}{10000}$$
 
 
 ## Running the Model
