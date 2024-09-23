@@ -130,14 +130,15 @@ def calc_score(board):
 
 The score formula is given by:
 
-\[ 	ext{SCORE} = rac{\sum_{j=1}^{10000} \left[ 100 - \left( rac{100 \cdot TD(N_1^j, N_2^j)}{\max TD(N_k, N_l)} \cdot 0.5 + rac{100 \cdot ED(N_1^j, u_j)}{\max ED(u_k, u_l)} \cdot 0.5 
-ight) 
-ight]}{10000} \]
+\[
+\text{SCORE} = \frac{\sum_{j=1}^{10000} \left[ 100 - \left( \frac{100 \cdot TD(N_1^j, N_2^j)}{\max TD(N_k, N_l)} \cdot 0.5 + \frac{100 \cdot ED(N_1^j, u_j)}{\max ED(u_k, u_l)} \cdot 0.5 \right) \right]}{10000}
+\]
+
 
 ## Running the Model
 The algorithm was run for 10,000 iterations, and the change in the learning rate over time was tracked.
 
-![Learning Rate Change Over Iterations](learning_rate.png)
+![Running example](run.jpg)
 
 ## Running Instructions
 To run the model, follow these steps:
